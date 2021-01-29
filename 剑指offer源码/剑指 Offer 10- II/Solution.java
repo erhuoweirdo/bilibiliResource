@@ -1,22 +1,18 @@
 package com.eh;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Stack;
-
 class Solution {
-    HashMap<Integer, Integer> map = new HashMap<>();
 
     public int numWays(int n) {
-        if (n <= 1) {
-            return 1;
+        if (n == 0) return 1;
+        if (n == 1) return 1;
+        if (n == 2) return 2;
+        int[] dp = new int[n + 1];
+        dp[0] = 1;
+        dp[1] = 1;
+        dp[2] = 2;
+        for (int i = 3; i <= n; i++) {
+            dp[i] = (dp[i - 1] + dp[i - 2]) % 1000000007;
         }
-        if (map.containsKey(n)) {
-            return map.get(n);
-        } else {
-            map.put(n, (numWays(n - 1) + numWays(n - 2)) % 1000000007);
-            return map.get(n);
-        }
+        return dp[n];
     }
 }

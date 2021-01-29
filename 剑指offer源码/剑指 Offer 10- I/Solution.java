@@ -1,28 +1,16 @@
 package com.eh;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Stack;
 
 class Solution {
-    HashMap<Integer, Integer> inmap = new HashMap<>();
-
-    int[] po;
-
-    public TreeNode buildTree(int[] preorder, int[] inorder) {
-        po = preorder;
-        for (int i = 0; i < inorder.length; i++) {
-            inmap.put(inorder[i], i);
+    public int fib(int n) {
+        if (n == 0) return 0;
+        if (n == 1) return 1;
+        int[] dp = new int[n + 1];
+        dp[0] = 0;
+        dp[1] = 1;
+        for (int i = 2; i <= n; i++) {
+            dp[i] = (dp[i - 1] + dp[i - 2]) % 1000000007;
         }
-        return recur(0, 0, inorder.length - 1);
-    }
-    public TreeNode recur(int pre_root, int in_left, int in_right) {
-        if (in_left > in_right) return null;
-        TreeNode node = new TreeNode(po[pre_root]);
-        int i = inmap.get(po[pre_root]);
-        node.left = recur(pre_root + 1, in_left, i - 1);
-        node.right = recur(pre_root + i - in_left + 1,i + 1,in_right);
-        return node;
+        return dp[n];
     }
 }
